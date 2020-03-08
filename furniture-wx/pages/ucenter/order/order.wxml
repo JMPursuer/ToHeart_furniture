@@ -1,0 +1,64 @@
+<view class="container">
+	<view class="orders-switch">
+		<view class="item {{ showType == 0 ? 'active' : ''}}" bindtap="switchTab" data-index='0'>
+			<view class="txt">全部</view>
+		</view>
+		<view class="item {{ showType == 1 ? 'active' : ''}}" bindtap="switchTab" data-index='1'>
+			<view class="txt">待付订金</view>
+		</view>
+		<view class="item {{ showType == 2 ? 'active' : ''}}" bindtap="switchTab" data-index='2'>
+			<view class="txt">待付尾款</view>
+		</view>
+		<view class="item {{ showType == 3 ? 'active' : ''}}" bindtap="switchTab" data-index='3'>
+			<view class="txt">待发货</view>
+		</view>
+		<view class="item {{ showType == 4 ? 'active' : ''}}" bindtap="switchTab" data-index='4'>
+			<view class="txt">待收货</view>
+		</view>
+		<view class="item {{ showType == 5 ? 'active' : ''}}" bindtap="switchTab" data-index='5'>
+			<view class="txt">已完成</view>
+		</view>
+	</view>
+	<view class="no-order" wx:if="{{orderList.length <= 0}}">
+		<view class="c">
+    <image src="http://129.204.122.146:61245/61r2rplbisxfqjn4td6e.png" class="no-order-img"></image>
+			<text>暂无订单</text>
+		</view>
+	</view>
+	<view class="orders">
+		<view class="order" wx:for="{{orderList}}" wx:key="id">
+			<navigator url="../orderDetail/orderDetail?id={{item.id}}">
+				<view class="header">
+					<view class="l">
+						<image class="header-icon" src="http://129.204.122.146:61245/q9zytcxwe0mr5mi541df.png"></image>
+						订单编号：{{item.orderSn}}
+					</view>
+					<view class="r">{{item.orderStatusText}}</view>
+				</view>
+				<view class="goods" wx:for="{{item.goodsList}}" wx:key="id" wx:for-item="gitem">
+					<view class="img">
+						<image src="{{gitem.picUrl}}" mode="aspectFit"></image>
+					</view>
+					<view class="info">
+						<text class="name">{{gitem.goodsName}}</text>
+						<text class="sub-title">{{gitem.option}}</text>
+					</view>
+					<view class="b">
+						<view class="l">￥{{gitem.price}}</view>
+						<view class="number">X{{gitem.number}}</view>
+					</view>
+				</view>
+			</navigator>
+			<view class="contact">
+        <view class="contact-warp" bindtap="cancelOrder" wx:if="{{item.handleOption.cancel}}" data-id="{{item.id}}"><text>取消订单</text></view>
+				<view class="contact-warp">
+          <text>联系客服</text>
+          <contact-button style="left:0;top:0;opacity:0;position:absolute;width:100%;height:100%;" type="default-dark" session-from="weapp" size="27">
+          </contact-button>
+        </view>
+        <navigator class="contact-warp" url="../orderDetail/orderDetail?id={{item.id}}" wx:if="{{item.handleOption.pay}}"><text class="active">去付款</text></navigator>
+        <view class="contact-warp active" bindtap="confirmOrder" wx:if="{{item.handleOption.confirm}}" data-id="{{item.id}}"><text class="active">确认收货</text></view>
+			</view>
+		</view>
+	</view>
+</view>

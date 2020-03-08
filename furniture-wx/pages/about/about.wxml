@@ -1,0 +1,10 @@
+<view class="container">
+	<image src="http://129.204.122.146:61245/08nglp49d5f93ub38o37.png" class="logo"></image>
+	<view class="tips">
+		<text>
+      心至家居，用心做家居，立足全球化视野，牢固树立“创新、协调、绿色、开放、共享”的发展理念，把发展基点放在创新上，以此推动供给侧的结构性改革，引领产业转型升级。
+      </text>
+		<view>联系地址：{{address}}</view>
+		<view>联系电话：{{phone}}</view>
+	</view>
+</view>

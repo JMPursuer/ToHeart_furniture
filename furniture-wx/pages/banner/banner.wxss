@@ -1,0 +1,11 @@
+/* pages/banner/banner.wxss */
+.detail {
+  width: 750rpx;
+  height: auto;
+  background: #fff;
+}
+
+.detail image {
+  width: 750rpx;
+  display: block;
+}

@@ -1,0 +1,26 @@
+<view class="container">
+    <view class="form-box">
+		<image src="http://129.204.122.146:61245/08nglp49d5f93ub38o37.png" class="logo"></image>
+    	<view class="form-item">
+			<text class="iconfont iconshouji logo-icon"></text>
+    		<input class="username" value="{{mobile}}" bindinput="bindUsernameInput" placeholder="{{type===1?'账号':'手机号码'}}"/>
+    	</view>
+
+    	<view class="form-item clear-password" wx:if="{{type===1}}">
+			<text class="iconfont iconmima logo-icon"></text>
+    		<input class="password" value="{{password}}" password bindinput="bindPasswordInput" placeholder="密码"/>
+						<navigator url="/pages/auth/reset/reset" wx:if="{{type===1}}" class="reset">忘记密码</navigator>      
+    	</view>
+			<view class="form-item clear-password" wx:if="{{type===2}}">
+			<text class="iconfont iconmima logo-icon"></text>
+    		<input class="password" value="{{code}}" bindinput="bindCodeInput" placeholder="验证码"/>
+						<view  class="reset {{codeName>0?'display':''}}" bindtap="sendCode">{{codeName}}</view>   
+    	</view>
+    <button class="login-btn" wx:if="{{type===1}}" bindtap="accountLogin">登 录</button>
+    <button class="login-btn" wx:if="{{type===2}}" bindtap="smsLogin">登 录</button>
+    <view class="sms-login-btn" bindtap="checkedLogin">{{type===1?'短信登录':'账号登录'}}</view>
+
+     <view class="form-item-text">
+    </view> 
+    </view>
+</view>

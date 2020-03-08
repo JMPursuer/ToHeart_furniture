@@ -1,0 +1,15 @@
+<!--pages/ucenter/setPasswd/setPasswd.wxml-->
+<view class='input_main'>
+	<view class='input_title'>
+		<text wx:if="{{isSetPassword===1}}">
+    {{type===1?'请输入旧支付密码':type===2?'请输入新支付密码':'二次确认支付密码'}}
+    </text>
+    <text wx:else>{{type===1?'请输入支付密码':'二次确认支付密码'}}</text>
+	</view>
+	<view class='input_row' catchtap='getFocus'>
+		<view class='pwd_item' wx:for='{{6}}' wx:key='item' wx:for-index='i'>
+			<text wx:if='{{pwdVal.length>i}}'></text>
+		</view>
+	</view>
+	<input class='input_control' password type='number' value="{{pwdVal}}" focus='{{payFocus}}' bindinput='inputPwd' maxlength='6' />
+</view>

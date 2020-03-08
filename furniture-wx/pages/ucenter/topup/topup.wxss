@@ -1,0 +1,44 @@
+/* pages/ucenter/topup/topup.wxss */
+.container {
+  background: #fff;
+}
+
+.space-between {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 32rpx 30rpx;
+}
+
+.balance-warp {
+  border-bottom: 1rpx solid #ddd;
+}
+
+.title {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.amount-warp {
+  padding: 30rpx;
+}
+
+.amount-warp .space-between {
+  width: 690rpx;
+  margin: 20rpx auto;
+  border: 1rpx solid #ddd;
+}
+.amount-warp .space-between .amount{
+  width: 620rpx;
+}
+.btn {
+  margin: 70rpx auto;
+  width: 690rpx;
+  height: 88rpx;
+  background: rgba(207, 19, 27, 1);
+  border-radius: 8rpx;
+  color: #fff;
+  font-size: 36rpx;
+  line-height: 88rpx;
+  text-align: center;
+}

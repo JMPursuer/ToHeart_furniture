@@ -1,0 +1,16 @@
+<!--pages/ucenter/topup/topup.wxml-->
+<view class="container">
+<view class="space-between balance-warp">
+<view class="title">账户可用余额</view>
+<view>{{balance}}</view>
+</view>
+<view class="amount-warp">
+<view class="title">请输入充值金额：</view>
+<view class="amount space-between">
+    		<input class="amount" value="{{amount}}" type="number" bindinput="bindAmountInput" placeholder="单次充值最多3000元"/>
+        <text>元</text>
+</view>
+</view>
+<view class="btn" bindtap="topup" wx:if="{{openid}}">充值</view>
+<button class="btn" wx:else bindgetuserinfo="getUserInfo" open-type="getUserInfo">充值前需要微信授权</button>
+</view>

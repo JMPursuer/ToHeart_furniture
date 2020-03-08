@@ -1,0 +1,25 @@
+<view class="container">
+  <view class="address-list" wx:if="{{ addressList.length > 0 }}">
+    <view class="item" wx:for="{{addressList}}" wx:key="id" bindtap="addressAddOrUpdate" data-address-id="{{item.id}}">
+      <view class='address-content'>
+        <view class='address-info color000'>
+          <text class="name">{{item.name}}</text>{{item.tel}}
+        </view>
+        <view class='address-adr'>
+          <view class="address">
+            <text class="default" wx:if="{{item.isDefault}}">默认</text>
+            <text class='adr' style="text-indent: {{ item.isDefault ? '65rpx':'0' }}">{{item.addressDetail}}</text>
+          </view>
+        </view>
+      </view>
+      <view class='mid'></view>
+      <view class='address-del'>
+        <van-icon catchtap="deleteAddress" data-address-id="{{item.id}}" class="del" name="delete"/>
+      </view>
+    </view>
+  </view>
+  <view class="empty-view" wx:if="{{ addressList.length <= 0 }}">
+    <text class="text">收货地址还没有~~~</text>
+  </view>
+  <view class="add-address" bindtap="addressAddOrUpdate" data-address-id="0">新增收货地址</view>
+</view>

@@ -1,0 +1,108 @@
+.form-box {
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  padding: 0 40rpx;
+  margin-top: 200rpx;
+  background: #fff;
+  margin: 50rpx 0;
+  text-align: center;
+}
+.logo{
+  width: 170rpx;
+  height: 145rpx;
+}
+.form-item {
+  position: relative;
+  background: #fff;
+  border-bottom: 1px solid #d9d9d9;
+  text-align: left;
+  font-size: 32rpx;
+  color: #333;
+  display: flex;
+  align-items: center;
+  height: 114rpx;
+  width: 594rpx;
+  margin: auto;
+}
+.logo-icon {
+  font-size: 40rpx;
+  color: #333;
+  margin-right: 40rpx;
+}
+.form-item-code {
+  margin-top: 32rpx;
+  height: auto;
+  overflow: hidden;
+  width: 100%;
+}
+
+.form-item-code .form-item {
+  float: left;
+  width: 350rpx;
+}
+
+.form-item-code .code-img {
+  float: right;
+  margin-top: 4rpx;
+  height: 88rpx;
+  width: 236rpx;
+}
+
+.form-item .clear {
+  position: absolute;
+  top: 32rpx;
+  right: 18rpx;
+  z-index: 2;
+  display: block;
+  background: #fff;
+}
+.clear-password .clear {
+  right: 120rpx;
+}
+.login-btn {
+  margin-top: 60rpx;
+  background: #CF131B;
+  height: 88rpx;
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+  border-radius: 8rpx;
+  color: #fff;
+  font-size: 36rpx;
+  width: 594rpx;
+}
+
+.form-item-text {
+  height: 35rpx;
+  width: 100%;
+}
+
+.form-item-text .register {
+  display: block;
+  height: 34rpx;
+  float: left;
+  font-size: 28rpx;
+}
+
+.reset {
+  display: block;
+  height: 34rpx;
+  float: right;
+  font-size: 28rpx;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  right: 20rpx;
+  color: #CF131B;
+}
+.sms-login-btn{
+  font-size: 32rpx;
+  color: #CF131B;
+  margin-top: 30rpx;
+  text-decoration: underline;
+}
+.display{
+  color: #d1d1d1;
+}

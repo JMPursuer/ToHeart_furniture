@@ -1,0 +1,111 @@
+var api = require('../config/api.js');
+var app = getApp();
+
+function formatTime(date) {
+  var year = date.getFullYear()
+  var month = date.getMonth() + 1
+  var day = date.getDate()
+
+  var hour = date.getHours()
+  var minute = date.getMinutes()
+  var second = date.getSeconds()
+
+
+  return [year, month, day].map(formatNumber).join('-') + ' ' + [hour, minute, second].map(formatNumber).join(':')
+}
+
+function formatNumber(n) {
+  n = n.toString()
+  return n[1] ? n : '0' + n
+}
+
+/**
+ * 封封微信的的request
+ */
+function request(url, data = {}, method = "GET") {
+  return new Promise(function (resolve, reject) {
+    wx.request({
+      url: url,
+      data: data,
+      method: method,
+      header: {
+        'Content-Type': 'application/json',
+        'X-Litemall-Token': wx.getStorageSync('token')
+      },
+      success: function (res) {
+        if (res.statusCode == 200) {
+          if (res.data.errno == 501) {
+            // 清除登录相关内容
+            try {
+              wx.removeStorageSync('userInfo');
+              wx.removeStorageSync('token');
+            } catch (e) {
+              // Do something when catch error
+            }
+            // 切换到登录页面
+            wx.navigateTo({
+              url: '/pages/auth/accountLogin/accountLogin'
+            });
+          } else {
+            if (res.data.success ||res.data.errno ===0) {
+              res.data.errno = 0
+              res.data.success = true
+            }
+            resolve(res.data);
+          }
+        } else {
+          reject(res.errMsg);
+        }
+
+      },
+      fail: function (err) {
+        reject(err)
+      }
+    })
+  });
+}
+
+function redirect(url) {
+
+  //判断页面是否需要登录
+  if (false) {
+    wx.redirectTo({
+      url: '/pages/auth/accountLogin/accountLogin'
+    });
+    return false;
+  } else {
+    wx.redirectTo({
+      url: url
+    });
+  }
+}
+
+function showErrorToast(msg) {
+  wx.showToast({
+    title: msg,
+    image: '/static/images/icon_error.png'
+  })
+}
+  /**
+   * 修改展示金额
+   * @param {*} s 金额
+   * @param {*} n 保留小数点
+   */
+  function fmoney(s, n) {
+    n = n > 0 && n <= 20 ? n : 2;
+    s = parseFloat((s + "").replace(/[^\d\.-]/g, "")).toFixed(n) + "";
+    var l = s.split(".")[0].split("").reverse(),
+      r = s.split(".")[1];
+    var t = "";
+    for (var i = 0; i < l.length; i++) {
+      t += l[i] + ((i + 1) % 3 == 0 && (i + 1) != l.length ? "," : "");
+    }
+    return t.split("").reverse().join("") + "." + r;
+  }
+module.exports = {
+  formatTime,
+  request,
+  redirect,
+  showErrorToast,
+  fmoney
+}

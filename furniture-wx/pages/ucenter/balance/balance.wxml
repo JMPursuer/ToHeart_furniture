@@ -1,0 +1,45 @@
+<!--pages/ucenter/balance/balance.wxml-->
+<view class="container">
+	<!-- 头部 start-->
+	<view class="balance-header">
+		<view class="box">
+			<view class="content">
+					<view class="left">
+					
+				<view class="title">账户余额(元)</view>
+				<view class="balance-box">
+					<view class="balance">{{balance}}</view>
+				</view>
+					</view>
+					<view class="buttom-arr">
+					<navigator url="/pages/ucenter/setPasswd/setPasswd" class="topup">
+						{{isSetPassword===1?'修改支付密码':'设置支付密码'}}
+						</navigator>
+					<navigator url="/pages/ucenter/topup/topup" class="topup">
+						去充值
+						</navigator>
+						</view>
+			</view>
+		</view>
+	</view>
+	<!-- 头部 end -->
+	<!-- 充值流水 start-->
+	<view class="balance-content">
+		<view class="balance-content-box">
+			<view class="title">资金流水</view>
+			<view class="result-item" wx:for="{{balanceList}}" wx:key="unique" data-data="{{item}}">
+				<view class="top space-between">
+					<view class="result-desc">{{item.desc}}</view>
+					<view class="result-flow {{item.checked?'add':''}}">{{item.checked?'+ '+item.flow:'- '+item.flow}}</view>
+				</view>
+				<view class="bottom space-between">
+					<view class="result-createTime">{{item.createTime}}</view>
+					<view class="result-balance">当前余额:{{item.balance}}</view>
+				</view>
+			</view>
+			<view class="loading" hidden="{{searchLoading}}">正在载入更多...</view>
+			<view class="loading complete" hidden="{{!searchLoading}}">已加载全部</view>
+		</view>
+	</view>
+	<!-- 充值流水 end -->
+</view>

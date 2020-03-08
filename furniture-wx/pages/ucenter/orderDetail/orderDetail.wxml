@@ -1,0 +1,164 @@
+<view class="container">
+  <!-- <view class="order-info">
+    <view class="item">下单时间：{{orderInfo.addTime}}</view>
+    <view class="item">订单编号：{{orderInfo.orderSn}}</view>
+    <view class="item">订单留言：{{orderInfo.message}}</view>
+    <view class="item-c">
+      <view class="l">实付：
+        <text class="cost">￥{{orderInfo.actualPrice}}</text>
+      </view>
+      <view class="r">
+        <view class="btn active" bindtap="cancelOrder" wx:if="{{handleOption.cancel}}">取消订单</view>
+        <view class="btn active" bindtap="payOrder" wx:if="{{handleOption.pay}}">去付款</view>
+        <view class="btn active" bindtap="confirmOrder" wx:if="{{handleOption.confirm}}">确认收货</view>
+        <view class="btn active" bindtap="deleteOrder" wx:if="{{handleOption.delete}}">删除订单</view>
+        <view class="btn active" bindtap="refundOrder" wx:if="{{handleOption.refund}}">申请退款</view>
+      </view>
+    </view>
+  </view> -->
+
+  <view class="order-header">
+      <view class="order-status">
+        <view class="order-icon {{orderClass[orderInfo.orderStatus].cls}}"></view>
+        <text class="order-stateTxt">{{orderClass[orderInfo.orderStatus].txt}}</text>
+      </view>
+      <view class="order-local">
+        <view class="order-member">
+          <text class="iconfont icondizhi"></text>
+          <text>{{orderInfo.consignee}}</text>{{orderInfo.mobile}}
+        </view>
+        <view class="order-site">
+          {{orderInfo.address}}
+        </view>
+      </view>
+  </view>
+
+  <view class="order-goods">
+    <view class="h">
+      <view class="label">商品信息</view>
+      <view class="status">{{orderInfo.orderStatusText}}</view>
+    </view>
+    <view class="goods">
+      <view wx:for="{{orderGoods}}" wx:key="id">
+        <view class="item">
+            <view class="img">
+              <image src="{{item.picUrl}}"></image>
+            </view>
+            <view class="info">
+              <view class="t">
+                <text class="name">{{item.goodsName}}</text>
+              </view>
+              <view class="attr">
+                {{item.option}}
+              </view>
+              <!-- <view class="attr">{{item.specifications}}</view>
+              <view class="price">￥{{item.price}}</view> -->
+              <view class="btn active" wx:if="{{handleOption.comment && (item.comment == 0)}}">
+                <navigator url="../../commentPost/commentPost?orderId={{item.orderId}}&&valueId={{item.goodsId}}&type=0">去评价</navigator>
+              </view>
+              <view class="btn active" wx:if="{{handleOption.rebuy}}">
+                <navigator url="../../goods/goods?id={{item.goodsId}}">再次购买</navigator>
+              </view>
+            </view>
+            <view class="r">
+              <view class="price">￥{{item.price}}</view>
+              <view class="number">x{{item.number}}</view>
+            </view>
+        </view>
+        <view class="item-progress">
+          <view class="inner" style="width: {{item.progress ? item.progress : 0}}%"></view>
+        </view>
+      </view>
+    </view>
+    <view class="order-bottom">
+      <!-- <view class="address">
+        <view class="t">
+          <text class="name">{{orderInfo.consignee}}</text>
+          <text class="mobile">{{orderInfo.mobile}}</text>
+        </view>
+        <view class="b">{{orderInfo.address}}</view>
+      </view> -->
+      <view class="total">
+        <view class="t">
+          共{{orderGoods.length}}件商品
+          合计：<text>￥{{orderInfo.goodsPrice}}</text>
+          <!-- <text class="label">商品合计：</text>
+          <text class="txt">￥{{orderInfo.goodsPrice}}</text> -->
+        </view>
+        <view class="t">{{orderInfo.orderStatus===101?'需':'已'}}付订金：<text class="{{orderInfo.orderStatus === 101 ? 'active' : ''}}">￥{{orderInfo.prepayPrice}}</text></view>
+        <view class="t">
+        {{orderInfo.orderStatus===202?'需':orderInfo.orderStatus===203?'已':orderInfo.orderStatus===202?'欠':'待'}}付尾款：<text class="{{orderInfo.orderStatus === 202 ? 'active' : ''}}">￥{{orderInfo.finalpayPrice}}</text></view>
+         <view class="t" wx:if="{{orderInfo.orderStatus===206}}">已付欠款金额：<text>￥{{orderInfo.paidFinalpay}}</text></view>
+        <view class="t" wx:if="{{orderInfo.orderStatus===206}}">当前要付的尾款金额：<text class="active">￥{{orderInfo.dueFinalpay}}</text></view>
+        <view class="t" wx:if="{{orderInfo.orderStatus===206}}">还欠尾款金额：<text>￥{{orderInfo.oweFinalpay}}</text></view>
+        <view class="t" wx:if="{{orderInfo.taxPrice >0}}">税费：<text>￥{{orderInfo.taxPrice}}</text></view>
+        <view class="t">实付{{orderInfo.taxPrice>0?'(包含税费)':''}}：<text>￥{{orderInfo.actualPrice}}</text></view>
+        <view class="opr">
+              <view class="contact-warp active" bindtap="payOrder" wx:if="{{handleOption.pay}}">去付款</view>
+              <view class="contact-warp" bindtap="refundOrder" wx:if="{{orderInfo.orderStatus === 201 || orderInfo.orderStatus === 202 ||orderInfo.orderStatus === 203}}">退款</view>
+              <view class="contact-warp" bindtap="cancelOrder" wx:if="{{orderInfo.orderStatus === 101}}">取消订单</view>
+              <view class="contact-warp active" bindtap="confirmOrder" wx:if="{{handleOption.confirm}}">确定收货</view>
+              <view class="contact-warp">
+                <text>联系客服</text>
+                <contact-button style="left:0;top:0;opacity:0;position:absolute;width:100%;height:100%;" type="default-dark" session-from="weapp" size="27">
+                </contact-button>
+              </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- <view class="order-express" bindtap="expandDetail" wx:if="{{ orderInfo.orderStatus === 301 }}">
+    <view class="order-express">
+      <view class="title">
+        <view class="t">快递公司：{{orderInfo.shipChannel}}</view>
+        <view class="b">物流单号：{{orderInfo.shipSn}}</view>
+      </view>
+      <van-icon class="ti" name="arrow" />      
+    </view>
+    <view class="traces" wx:for="{{expressInfo.Traces}}" wx:key="item" wx:for-item="iitem" wx:if="{{ flag }}">
+      <view class="trace">
+        <view class="acceptStation">{{iitem.AcceptStation}}</view>
+        <view class="acceptTime">{{iitem.AcceptTime}}</view>
+      </view>
+    </view>
+  </view> -->
+
+  <view class="order-info" wx:if="{{ orderInfo.orderStatus === 301 }}">
+    <view class="order-title">快递信息</view>
+    <view class="order-item">
+      <text class="label">快递公司</text>
+      <text class="content">{{orderInfo.shipName}}</text>
+    </view>
+    <view class="order-item">
+      <text class="label">物流单号</text>
+      <text class="content">{{orderInfo.shipSn}}</text>
+      <text bindtap="copySn" data-sn="{{orderInfo.shipSn}}" class="order-copy">复制</text>
+    </view>
+  </view>
+
+  <view class="order-info">
+    <view class="order-title">订单信息</view>
+    <view class="order-item">
+      <text class="label">订单编号</text>
+      <text class="content">{{orderInfo.orderSn}}</text>
+      <text bindtap="copySn" data-sn="{{orderInfo.orderSn}}" class="order-copy">复制</text>
+    </view>
+    <view class="order-item">
+      <text class="label">创建时间</text>
+      <text class="content">{{orderInfo.addTime}}</text>
+    </view>
+    <!-- <view class="order-item">
+      <text class="label">付款时间</text>
+      <text class="content">{{orderInfo.orderSn}}</text>
+    </view> -->
+    <view class="order-item" wx:if="{{ orderInfo.orderStatus === 301 }}">
+      <text class="label">发货时间</text>
+      <text class="content">{{orderInfo.shipTime}}</text>
+    </view>
+    <view class="order-item">
+      <text class="label">留言</text>
+      <text class="content">{{orderInfo.message}}</text>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xinzhi.furniture.mall.db.dao.GoodsOptMapper">
+
+    <insert id="addOptionTmp">
+        INSERT INTO `litemall_goods_option_tmp` (`type`, `material`, `code`, `image`, `desc`, `status`, `price`)
+        VALUES 
+        <foreach collection="optionList" item="option" separator=",">
+            (#{option.type}, #{option.material}, #{option.code}, #{option.image}, #{option.desc}, #{option.status}, #{option.price})
+        </foreach>
+    </insert>
+
+    <delete id="deleteOptionTmp">
+        delete from `litemall_goods_option_tmp` where id > 0
+    </delete>
+
+    <insert id="addOption">
+        insert into `litemall_goods_option` (`goods_id`, `type`, `material`, `code`, `image`, `desc`, `status`, `add_time`, `update_time`, `price`)
+        values
+        <foreach collection="optionList" item="option" separator=",">
+            (#{option.goodsId}, #{option.type}, #{option.material}, #{option.code}, #{option.image}, #{option.desc}, #{option.status}, #{option.addTime}, #{option.updateTime}, #{option.price})
+        </foreach>
+        on duplicate key update
+        material = values(material),
+        image = values(image),
+        `desc` = values(`desc`),
+        status = values(status),
+        update_time = values(update_time),
+        price = values(price)
+    </insert>
+
+    <insert id="addProduct">
+        INSERT INTO `litemall_goods_product` (`goods_id`, `price`, `url`, `add_time`, `update_time`, `code`, `title`)
+        VALUES
+        <foreach collection="productList" item="product" separator=",">
+            (#{product.goodsId}, #{product.price}, #{product.url}, #{product.addTime}, #{product.updateTime}, #{product.code}, #{product.title})
+        </foreach>
+        on duplicate key update
+        price = values(price),
+        url = values(url),
+        update_time = values(update_time),
+        title = values(title)
+    </insert>
+
+    <delete id="deleteProduct">
+        delete from `litemall_goods_product` where code in
+        <foreach collection="codeList" item="code" index="index" open="(" close=")" separator=",">
+            #{code}
+        </foreach>
+    </delete>
+
+</mapper>

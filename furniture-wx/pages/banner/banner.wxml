@@ -1,0 +1,7 @@
+<!--pages/banner/banner.wxml-->
+<view class="container">      
+<view class="detail">
+    <import src="/lib/wxParse/wxParse.wxml" />
+    <template is="wxParse" data="{{wxParseData:detail.nodes}}" />
+  </view>
+  </view>

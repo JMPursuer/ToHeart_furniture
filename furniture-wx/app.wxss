@@ -1,0 +1,37 @@
+/**app.wxss**/
+@import "style/iconfont.wxss";
+.container {
+  box-sizing: border-box;
+  background-color:rgba(240,240,240,1);
+  font-family: PingFangSC-Light, helvetica, 'Heiti SC';
+}
+
+view, image, text, navigator {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+view, text {
+  font-family: PingFangSC-Light, helvetica, 'Heiti SC';
+  font-size: 29rpx;
+  color: #333;
+}
+
+.bg-red {
+  background-color:#D0141C;
+  display:inline-block;
+  width:36rpx;
+  height:36rpx;
+  line-height:36rpx
+}
+.bg-red .iconicon_add {
+  color: #fff;
+  font-size: 28rpx;
+  font-weight: bold;
+}
+
+.color000 {color: #000000;}
+.color333 {color: #333333}
+.color666 {color: #666666}
+.color999 {color: #999999}

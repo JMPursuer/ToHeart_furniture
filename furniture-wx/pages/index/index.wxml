@@ -1,0 +1,59 @@
+<!--index.wxml-->
+<view class="container">
+  <!-- <view class="search">
+  <navigator url="/pages/search/search" class="input">
+      <van-icon name="search"/>
+      <text class="txt">商品搜索, 共{{goodsCount}}款好物</text>
+    </navigator>
+  </view> -->
+  <swiper class="banner" indicator-dots="true" autoplay="true" interval="3000" duration="1000">
+    <swiper-item wx:for="{{banner}}" wx:key="id">
+      <block wx:if="{{item.link}}">
+        <navigator url="/pages/banner/banner?id={{item.id}}" class="banner-image">
+          <image mode="aspectFit" src="{{item.url}}" background-size="cover" bindtap="gowebView"></image>
+        </navigator>
+      </block>
+      <block wx:else>
+        <image src="{{item.url}}" background-size="cover"></image>
+      </block>
+    </swiper-item>
+  </swiper>
+  <view class="m-menu">
+    <navigator class="item" url="/pages/category/category?id={{item.id}}" wx:for="{{channel}}" wx:key="id">
+      <image src="{{item.iconUrl}}" background-size="cover"></image>
+      <text>{{item.name}}</text>
+    </navigator>
+  </view>
+  <!-----------------------------轮播商品----------------------------->
+  <view class="banner-new" wx:if="{{newGoods.length > 0}}">
+    <swiper class='swiperClass' autoplay indicator-dots="{{false}}" interval="5000" duration="1000" previous-margin="50rpx" next-margin="50rpx" circular bindchange="bindchange">
+      <swiper-item class="item" wx:for="{{newGoods}}" wx:for-index="index" wx:for-item="item" wx:key="id">
+        <navigator class="item-li" url="../goods/goods?id={{item.id}}">
+          <image class="img" src="{{item.picUrl}}" mode="aspectFit"></image>
+        </navigator>
+      </swiper-item>
+    </swiper>
+  </view>
+  <!-----------------------------热销商品----------------------------->
+  <view class="hot-grid">
+    <view class="h">
+      <text>热销商品</text>
+
+    </view>
+    <view class="b">
+      <view class="box">
+        <block wx:for="{{hotGoods}}" wx:for-index="iindex" wx:for-item="iitem" wx:key="id">
+          <view class="item {{iindex % 2 == 0 ? '' : 'item-b'}}">
+            <navigator url="../goods/goods?id={{iitem.id}}" class="item-list">
+              <image mode="aspectFit" class="img" src="{{iitem.picUrl}}" background-size="cover"></image>
+            </navigator>
+          </view>
+        </block>
+      </view>
+    </view>
+  </view>
+  <!-----------------------------底线----------------------------->
+  <view class="bottom">
+    <view class="title">我是有底线的</view>
+  </view>
+</view>

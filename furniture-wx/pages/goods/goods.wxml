@@ -1,0 +1,130 @@
+<view class="container">
+	<swiper class="goodsimgs" indicator-dots="true" autoplay="true" interval="3000" duration="1000">
+		<swiper-item wx:for="{{goods.gallery}}" wx:key="*this">
+			<image src="{{item}}" background-size="cover" mode="aspectFit"></image>
+		</swiper-item>
+	</swiper>
+	<view class="goods_info">
+		<!-- 商品名称 -->
+		<view class='goods_name'>
+			<view class='goods_name_left'>{{goods.name}}</view>
+		</view>
+		<!-- 商品价格 -->
+		<view class="price"><text>￥</text><text class="price_number">{{goods.retailPrice}}</text><text>起</text></view>
+
+	</view>
+	<view class="goods_detail">
+		<view wx:if="{{productListChecked.length>0}}">
+			<view class="title"><text>库存商品</text></view>
+			<view class="product-list-checked" bindtap="chooseCheckedOption" data-item="{{item}}" wx:for="{{productListChecked}}" wx:key="id">
+				{{item.title}}
+			</view>
+		</view>
+		<view class="goods-attr" wx:if="{{goods.attribute.length>0}}">
+			<view class="title"><text>商品参数</text></view>
+			<view class="list">
+				<view class="item" wx:for="{{goods.attribute}}" wx:key="name">
+					<text class="left">{{item.attribute}}</text>
+					<text class="right">{{item.value}}</text>
+				</view>
+			</view>
+		</view>
+		<view class="title goods_detail_title"><text>商品详情</text></view>
+		<view class="detail">
+			<import src="/lib/wxParse/wxParse.wxml" />
+			<template is="wxParse" data="{{wxParseData:goodsDetail.nodes}}" />
+		</view>
+		<view class="issue-warp" wx:if="{{issueList.length>0}}">
+			<view class="title"><text>常见问题</text></view>
+			<view class="list">
+				<view class="li" wx:for="{{issueList}}" wx:key="name">
+					<view class="li-title">{{index+1}}、{{item.question}}</view>
+					<view class="li-content">{{item.answer}}</view>
+				</view>
+			</view>
+		</view>
+	</view>
+</view>
+<!-- 规格选择界面 -->
+<view class="attr-pop-box" hidden="{{!openAttr}}">
+	<view class="attr-pop">
+		<view class="close" bindtap="closeAttr">
+			<van-icon class="icon" name="cross" />
+		</view>
+		<view class="img-info">
+			<view class="img-box">
+				<image src="{{product.isSpot===1?'http://129.204.122.146:61245/o2zovi0ssx6f6lq4wovf.png':'http://129.204.122.146:61245/8rv7bf1ip8neprcy4boq.png'}}" class="img-sub-box"></image>
+				<image class="img" src="{{product.url}}" background-size="cover" mode="aspectFit"></image>
+			</view>
+			<view class="info">
+				<view class="c c-checked">
+					<view class="sub-title">价格：</view>
+					<view class="price_show">¥<text>{{product.price}}</text></view>
+				</view>
+				<view class="c c-checked">
+					<view class="sub-title">已选：</view>
+					<view>{{product.desc}}</view>
+				</view>
+			</view>
+		</view>
+
+		<!-- 规格列表 -->
+		<view class="spec-con">
+			<view class="choose-warp">
+				<view class="title">面料</view>
+				<view class="choose-list">
+					<view wx:for="{{option.p01List}}" wx:key="index" bindtap="chooseOption" data-type="1" data-item="{{item}}" class="{{choose.p01List.code === item.code?'active':''}} {{item.status !==1?'no-checked':''}}">{{item.desc}}</view>
+				</view>
+			</view>
+			<view class="choose-warp">
+				<view class="title">颜色</view>
+				<view class="choose-list">
+					<view wx:for="{{option.p02List}}" wx:key="index" bindtap="chooseOption" data-type="2" data-item="{{item}}" class="{{choose.p02List.code === item.code?'active':''}} {{item.status !==1?'no-checked':''}}">{{item.desc}}</view>
+				</view>
+			</view>
+			<view class="choose-warp">
+				<view class="title">海绵</view>
+				<view class="choose-list">
+					<view wx:for="{{option.p03List}}" wx:key="index" bindtap="chooseOption" data-type="3" data-item="{{item}}" class="{{choose.p03List.code === item.code?'active':''}} {{item.status !==1?'no-checked':''}}">{{item.desc}}</view>
+				</view>
+			</view>
+			<!-- 数量 -->
+			<view class="number-item">
+				<view class="title">数量</view>
+				<view class="selnum">
+					<view class="cut" bindtap="cutNumber">-</view>
+					<input value="{{choose.number}}" class="number" disabled="true" type="number" />
+					<view class="add" bindtap="addNumber">+</view>
+				</view>
+			</view>
+		</view>
+		<view class="bottom-btn">
+			<view class="l l-cart">
+				<view class="box">
+					<text class="cart-count">{{cartGoodsCount}}</text>
+					<van-icon bindtap="openCartPage" class="icon" name="cart-o" />
+				</view>
+			</view>
+			<view class="r" bindtap="getCat">加入购物车</view>
+			<view class="c" bindtap="getBuy">立即购买</view>
+		</view>
+	</view>
+</view>
+
+<!-- 联系客服 -->
+<!-- <view class="contact">
+  <contact-button style="opacity:0;position:absolute;" type="default-dark" session-from="weapp" size="27">
+  </contact-button>
+</view> -->
+
+<!-- 底部按钮 -->
+<view class="bottom-btn-fixed bottom-btn" hidden="{{openAttr}}">
+	<view class="l l-cart">
+		<view class="box">
+			<text class="cart-count">{{cartGoodsCount}}</text>
+			<van-icon bindtap="openCartPage" class="icon" name="cart-o" />
+		</view>
+	</view>
+	<view class="r" bindtap="openAttrFun">加入购物车</view>
+	<view class="c" bindtap="openAttrFun">立即购买</view>
+</view>

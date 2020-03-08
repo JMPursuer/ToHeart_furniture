@@ -1,0 +1,62 @@
+<view class="container">
+	<view class="no-login" wx:if="{{!hasLogin}}">
+		<view class="c">
+			<text>还没有登录</text>
+			<button style="background-color:#A9A9A9" bindtap="goLogin">去登录</button>
+		</view>
+	</view>
+	<view class='login' wx:else>
+		<view class="no-cart" wx:if="{{cartGoods.length <= 0}}">
+			<view class="c">
+				<image class="no-cart" src="http://129.204.122.146:61245/wd3bxlod60w3dfusur1z.png"></image>
+				<text>赶紧去选购商品吧</text>
+			</view>
+		</view>
+		<view class="cart-view" wx:else>
+			<view class="edit-btn {{!isEditCart ? 'edit' : 'sure'}}" bindtap="editCart">
+				<text>共{{cartGoods.length}}件商品</text>
+				<text>{{!isEditCart ? '编辑' : '完成'}}</text>
+			</view>
+			<view class="list">
+				<view class="group-item">
+					<view class="goods">
+						<view class="item {{isEditCart ? 'edit' : ''}}" wx:for="{{cartGoods}}" wx:key="id">
+							<van-checkbox value="{{ item.checked }}" checked-color="#CF131B" bind:change="checkedItem" data-item-index="{{index}}"></van-checkbox>
+							<view class="cart-goods">
+								<image class="img" src="{{item.picUrl}}"></image>
+								<view class="info">
+									<view class="t">
+										<text class="name">{{item.goodsName}}</text>
+										<view class="sub-name">
+											<view class="left">已选：</view>
+											<view>{{item.option}}</view>
+										</view>
+									</view>
+									<view class="b">
+										<view class="price">￥<text>{{item.price}}</text></view>
+										<view class="selnum">
+											<view class="cut {{item.number===1?'no-cut':''}}" bindtap="cutNumber" data-item-index="{{index}}">-</view>
+											<input value="{{item.number}}" class="number" disabled="true" type="number" />
+											<view class="add" bindtap="addNumber" data-item-index="{{index}}">+</view>
+										</view>
+									</view>
+								</view>
+							</view>
+						</view>
+					</view>
+				</view>
+
+			</view>
+			<view class="cart-bottom">
+				<van-checkbox value="{{ checkedAllStatus }}" checked-color="#CF131B" bind:change="checkedAll">全选（{{cartTotal.checkedGoodsCount}}）</van-checkbox>
+				<view class="cart-bottom-right">
+					<view class="total" wx:if="{{!isEditCart}}"><view>合计：</view><view class="total-price">¥{{cartTotal.checkedGoodsAmount}}</view></view>
+					<view class='action_btn_area'>
+						<view class="delete" bindtap="deleteCart" wx:if="{{isEditCart}}">删除</view>
+						<view class="checkout" bindtap="checkoutOrder" wx:if="{{!isEditCart}}">结算</view>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+</view>
